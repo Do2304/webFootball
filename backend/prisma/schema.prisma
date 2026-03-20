@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  phone         String?
+  address       String?
+  googleId      String?   @unique
+  avatar        String?
+  role          Role      @default(USER)
+  password      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  bookings      Booking[]
+  reviews       Review[]
+  contacts      Contact[]
+
+  @@map("users")
+}
+
+model Field {
+  id            String    @id @default(cuid())
+  name          String
+  description   String?
+  type          String    @default("7v7")
+  imageUrl      String?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  bookings      Booking[]
+  pricingRules  PricingRule[]
+
+  @@map("fields")
+}
+
+model PricingRule {
+  id            String    @id @default(cuid())
+  fieldId       String
+  field         Field     @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+  label         String
+  startTime     String
+  endTime       String
+  pricePerHour  Float
+  isWeekend     Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("pricing_rules")
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fieldId       String
+  field         Field         @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+  date          DateTime
+  startTime     String
+  endTime       String
+  totalPrice    Float
+  status        BookingStatus @default(PENDING)
+  playerName    String?
+  playerPhone   String?
+  playerEmail   String?
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@unique([fieldId, date, startTime])
+  @@map("bookings")
+}
+
+model Review {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rating        Int
+  comment       String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("reviews")
+}
+
+model Contact {
+  id            String    @id @default(cuid())
+  userId        String?
+  user          User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  firstName     String
+  lastName      String
+  email         String
+  phone         String
+  message       String
+  howDidYouHear String?
+  agreedTerms   Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+
+  @@map("contacts")
+}
+
+model GalleryImage {
+  id            String    @id @default(cuid())
+  url           String
+  caption       String?
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+
+  @@map("gallery_images")
+}
+
+model Event {
+  id            String    @id @default(cuid())
+  title         String
+  description   String?
+  date          DateTime
+  imageUrl      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("events")
+}
