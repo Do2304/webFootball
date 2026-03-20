@@ -43,9 +43,9 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-center mb-2">About Us</h1>
-      <p className="text-gray-500 text-center mb-10">Get in touch with us</p>
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <h1 className="text-3xl lg:text-4xl font-bold text-center mb-3">About Us</h1>
+      <p className="text-gray-500 text-center mb-10 lg:mb-12">Get in touch with us</p>
 
       {submitted ? (
         <Card className="max-w-lg mx-auto">
@@ -61,15 +61,15 @@ export default function AboutPage() {
         </Card>
       ) : (
         <Card className="bg-gradient-to-br from-green-50 to-blue-50 border-0">
-          <CardContent className="p-8">
-            <h2 className="text-xl font-bold text-center mb-2">Contact Us</h2>
-            <p className="text-gray-500 text-center mb-6">
+          <CardContent className="p-6 sm:p-8 lg:p-10">
+            <h2 className="text-xl font-bold text-center mb-3">Contact Us</h2>
+            <p className="text-gray-500 text-center mb-8">
               Please fill out the form below so we can arrange a party or event for you.
               <br />
               Please allow 1-2 business days for our reply.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4 max-w-lg mx-auto">
+            <form onSubmit={handleSubmit} className="space-y-5 max-w-lg mx-auto">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="firstName">First Name *</Label>
@@ -152,7 +152,7 @@ export default function AboutPage() {
               </Button>
             </form>
 
-            <div className="flex justify-center gap-6 mt-8">
+            <div className="flex justify-center gap-6 mt-10">
               <a
                 href="mailto:info@southwestsports.com"
                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-400 text-gray-800 text-sm font-medium hover:opacity-90"

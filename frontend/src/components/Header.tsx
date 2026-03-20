@@ -21,14 +21,14 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
             <span className="text-white font-bold text-sm">SS</span>
           </div>
           <span className="font-bold text-lg text-secondary hidden sm:block">
-            Southwest Sports
+            SW Sports Complex
           </span>
         </Link>
 
@@ -83,7 +83,7 @@ export default function Header() {
           )}
 
           <Link to="/fields" className="hidden lg:block">
-            <Button className="bg-accent hover:bg-accent/90 text-white">
+            <Button className="bg-red-600 hover:bg-red-700 text-white">
               Book Now
             </Button>
           </Link>
@@ -141,7 +141,9 @@ export default function Header() {
                   </>
                 ) : (
                   <Link to="/login" onClick={() => setOpen(false)}>
-                    <Button className="w-full bg-primary">Log in / Register</Button>
+                    <Button className="w-full bg-primary">
+                      Log in / Register
+                    </Button>
                   </Link>
                 )}
                 <Link to="/fields" onClick={() => setOpen(false)}>

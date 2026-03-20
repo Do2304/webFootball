@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="bg-secondary text-gray-300">
       {/* Footer Links Bar */}
       <div className="border-t border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex flex-wrap justify-center gap-3">
             {[
               { label: "Location", icon: MapPin, path: "/#location" },
@@ -29,18 +29,21 @@ export default function Footer() {
       </div>
 
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Logo */}
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
                 <span className="text-white font-bold text-sm">SS</span>
               </div>
-              <span className="font-bold text-lg text-white">Southwest Sports</span>
+              <span className="font-bold text-lg text-white">
+                Southwest Sports
+              </span>
             </div>
             <p className="text-sm text-gray-400">
-              Premium 7v7 artificial turf fields with professional lighting and facilities.
+              Premium 7v7 artificial turf fields with professional lighting and
+              facilities.
             </p>
           </div>
 
@@ -51,7 +54,11 @@ export default function Footer() {
               {["Home", "Book Field", "Pricing", "Gallery"].map((link) => (
                 <li key={link}>
                   <Link
-                    to={link === "Home" ? "/" : `/${link.toLowerCase().replace(" ", "-")}`}
+                    to={
+                      link === "Home"
+                        ? "/"
+                        : `/${link.toLowerCase().replace(" ", "-")}`
+                    }
                     className="text-sm hover:text-white transition-colors"
                   >
                     {link}
@@ -113,8 +120,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} Southwest Sports Entertainment Complex. All rights reserved.
+        <div className="border-t border-gray-700 mt-10 pt-8 text-center text-sm text-gray-500">
+          &copy; {new Date().getFullYear()} Southwest Sports Complex. All rights
+          reserved.
         </div>
       </div>
     </footer>

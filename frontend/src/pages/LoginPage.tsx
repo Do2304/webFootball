@@ -24,11 +24,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-4 bg-gradient-to-br from-green-50 to-blue-50">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full">
+    <div className="min-h-[70vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 bg-gradient-to-br from-green-50 to-blue-50">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl w-full">
         {/* Login */}
         <Card className="bg-gradient-to-br from-blue-100 to-purple-100 border-0">
-          <CardContent className="p-8 flex flex-col items-center justify-center min-h-[300px]">
+          <CardContent className="p-8 sm:p-10 flex flex-col items-center justify-center min-h-[300px]">
             <h2 className="text-2xl font-bold mb-6">Log In</h2>
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
@@ -43,7 +43,7 @@ export default function LoginPage() {
 
         {/* Register Info */}
         <Card className="bg-gradient-to-br from-green-100 to-cyan-100 border-0">
-          <CardContent className="p-8 flex flex-col items-center justify-center min-h-[300px]">
+          <CardContent className="p-8 sm:p-10 flex flex-col items-center justify-center min-h-[300px]">
             <h2 className="text-2xl font-bold mb-6">Register</h2>
             <p className="text-gray-600 text-center mb-4">
               Click "Log In" with Google to automatically create your account.
