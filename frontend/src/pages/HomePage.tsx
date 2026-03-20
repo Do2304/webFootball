@@ -31,8 +31,16 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-[600px] lg:h-[700px] bg-gradient-to-br from-green-900 to-gray-900 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/hero-field.jpg')] bg-cover bg-center opacity-40" />
+      <section className="relative h-[600px] lg:h-[700px] bg-black overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
+        >
+          <source src="/videos/v1.mp4" type="video/mp4" />
+        </video>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6 sm:px-8">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5">
             Southwest Sports Complex
@@ -106,24 +114,30 @@ export default function HomePage() {
               {
                 title: "Premium Turf",
                 desc: "FIFA-quality artificial turf for the best playing experience",
-                gradient: "from-green-500 to-emerald-700",
+                image: "/images/i1.jpg",
               },
               {
                 title: "LED Lighting",
                 desc: "Professional-grade lighting for night matches",
-                gradient: "from-blue-500 to-indigo-700",
+                image: "/images/i2.jpg",
               },
               {
                 title: "Modern Facilities",
                 desc: "Locker rooms, parking, and spectator areas",
-                gradient: "from-purple-500 to-pink-700",
+                image: "/images/i3.jpg",
               },
             ].map((item) => (
               <Card
                 key={item.title}
-                className={`bg-gradient-to-br ${item.gradient} text-white border-0 overflow-hidden`}
+                className="relative text-white border-0 overflow-hidden"
               >
-                <CardContent className="p-6 sm:p-8 h-52 flex flex-col justify-end">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <CardContent className="relative z-10 p-6 sm:p-8 h-52 flex flex-col justify-end">
                   <h3 className="text-xl font-bold mb-2">{item.title}</h3>
                   <p className="text-sm text-white/80">{item.desc}</p>
                 </CardContent>
@@ -195,9 +209,13 @@ export default function HomePage() {
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div
                 key={i}
-                className="aspect-video rounded-lg bg-gradient-to-br from-green-200 to-blue-200 flex items-center justify-center overflow-hidden"
+                className="aspect-video rounded-lg overflow-hidden"
               >
-                <span className="text-gray-500 text-sm">Field Photo {i}</span>
+                <img
+                  src={`/images/i${i}.jpg`}
+                  alt={`Field Photo ${i}`}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
               </div>
             ))}
           </div>
