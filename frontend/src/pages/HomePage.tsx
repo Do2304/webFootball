@@ -83,25 +83,6 @@ export default function HomePage() {
         </Link>
       </section>
 
-      {/* Quick Booking Widget */}
-      <section className="bg-white shadow-lg -mt-8 relative z-20 max-w-4xl mx-4 sm:mx-auto rounded-xl p-6 sm:p-8">
-        <div className="flex flex-col md:flex-row items-center gap-4">
-          <div className="flex-1 text-center md:text-left">
-            <h2 className="text-xl font-bold text-gray-800 mb-1">
-              Quick Booking
-            </h2>
-            <p className="text-gray-500 text-sm">
-              Select a field and check availability
-            </p>
-          </div>
-          <Link to="/fields">
-            <Button className="bg-primary hover:bg-primary/90 px-8">
-              <CalendarDays className="w-4 h-4 mr-2" />
-              Check Availability
-            </Button>
-          </Link>
-        </div>
-      </section>
 
       {/* Slides Section - Field Photos, Promotions */}
       <section className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
