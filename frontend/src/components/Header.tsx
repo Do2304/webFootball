@@ -24,9 +24,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-            <span className="text-white font-bold text-sm">SS</span>
-          </div>
+          <img src="/images/logo1.jpeg" alt="SW Sports Complex" className="w-10 h-10 rounded-full object-cover" />
           <span className="font-bold text-lg text-secondary hidden sm:block">
             SW Sports Complex
           </span>

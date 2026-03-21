@@ -34,9 +34,7 @@ export default function Footer() {
           {/* Logo */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-white font-bold text-sm">SS</span>
-              </div>
+              <img src="/images/logo1.jpeg" alt="SW Sports Complex" className="w-10 h-10 rounded-full object-cover" />
               <span className="font-bold text-lg text-white">
                 Southwest Sports
               </span>
