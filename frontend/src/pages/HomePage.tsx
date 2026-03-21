@@ -31,43 +31,44 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-[600px] lg:h-[700px] bg-black overflow-hidden">
+      <section className="relative overflow-hidden">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-60"
+          className="w-full block"
         >
           <source src="/videos/v1.mp4" type="video/mp4" />
         </video>
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6 sm:px-8">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5">
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-white px-6 sm:px-8">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-5">
             Southwest Sports Complex
           </h1>
-          <p className="text-xl md:text-2xl mb-2 text-gray-200">
+          <p className="text-sm sm:text-xl md:text-2xl mb-1 sm:mb-2 text-gray-200">
             Premium 7v7 Artificial Turf Fields
           </p>
-          <p className="text-lg mb-8 text-gray-300">
+          <p className="text-xs sm:text-lg mb-4 sm:mb-8 text-gray-300">
             Book your field in under 30 seconds
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-row gap-3 sm:gap-4">
             <Link to="/fields">
               <Button
-                size="lg"
-                className="bg-accent hover:bg-accent/90 text-white text-lg px-8 py-6"
+                size="sm"
+                className="bg-accent hover:bg-accent/90 text-white text-sm sm:text-lg sm:px-8 sm:py-6"
               >
-                <CalendarDays className="w-5 h-5 mr-2" />
+                <CalendarDays className="w-4 h-4 mr-1 sm:w-5 sm:h-5 sm:mr-2" />
                 Book Field
               </Button>
             </Link>
             <a href="tel:5551234567">
               <Button
-                size="lg"
+                size="sm"
                 variant="outline"
-                className="border-white bg-accent text-white hover:bg-white/10 text-lg px-8 py-6"
+                className="border-white bg-accent text-white hover:bg-white/10 text-sm sm:text-lg sm:px-8 sm:py-6"
               >
-                <Phone className="w-5 h-5 mr-2" />
+                <Phone className="w-4 h-4 mr-1 sm:w-5 sm:h-5 sm:mr-2" />
                 Call Now
               </Button>
             </a>
