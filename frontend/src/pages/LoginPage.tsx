@@ -10,7 +10,7 @@ import { Mail, Lock, User, ArrowRight, Eye, EyeOff } from "lucide-react";
 import api from "@/api/client";
 
 export default function LoginPage() {
-  const { login, user } = useAuth();
+  const { login, loginWithToken, user } = useAuth();
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -58,12 +58,14 @@ export default function LoginPage() {
       });
 
       if (res.data.token) {
-        localStorage.setItem("token", res.data.token);
+        await loginWithToken(res.data.token);
         navigate("/");
       }
     } catch (err) {
       const error = err as { response?: { data?: { message?: string } } };
-      setError(error.response?.data?.message || "Login failed. Please try again.");
+      setError(
+        error.response?.data?.message || "Login failed. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -99,7 +101,8 @@ export default function LoginPage() {
     } catch (err) {
       const error = err as { response?: { data?: { message?: string } } };
       setError(
-        error.response?.data?.message || "Registration failed. Please try again."
+        error.response?.data?.message ||
+          "Registration failed. Please try again."
       );
     } finally {
       setLoading(false);
@@ -109,18 +112,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 bg-gradient-to-br from-teal-50 via-white to-yellow-50">
       <div className="w-full max-w-4xl">
-        {/* Header */}
-        <div className="text-center mb-10">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-            {isLogin ? "Welcome Back" : "Join Us"}
-          </h1>
-          <p className="text-gray-500">
-            {isLogin
-              ? "Sign in to book your favorite fields"
-              : "Create your account to get started"}
-          </p>
-        </div>
-
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left side - Form */}
@@ -130,7 +121,10 @@ export default function LoginPage() {
                 // Login Form
                 <form onSubmit={handleEmailLogin} className="space-y-5">
                   <div>
-                    <Label htmlFor="email" className="text-gray-700 font-semibold mb-2 block">
+                    <Label
+                      htmlFor="email"
+                      className="text-gray-700 font-semibold mb-2 block"
+                    >
                       Email Address
                     </Label>
                     <div className="relative">
@@ -150,7 +144,10 @@ export default function LoginPage() {
                   </div>
 
                   <div>
-                    <Label htmlFor="password" className="text-gray-700 font-semibold mb-2 block">
+                    <Label
+                      htmlFor="password"
+                      className="text-gray-700 font-semibold mb-2 block"
+                    >
                       Password
                     </Label>
                     <div className="relative">
@@ -161,7 +158,10 @@ export default function LoginPage() {
                         placeholder="••••••••"
                         value={loginData.password}
                         onChange={(e) =>
-                          setLoginData({ ...loginData, password: e.target.value })
+                          setLoginData({
+                            ...loginData,
+                            password: e.target.value,
+                          })
                         }
                         className="pl-10 pr-10"
                         required
@@ -199,7 +199,10 @@ export default function LoginPage() {
                 // Register Form
                 <form onSubmit={handleRegister} className="space-y-5">
                   <div>
-                    <Label htmlFor="name" className="text-gray-700 font-semibold mb-2 block">
+                    <Label
+                      htmlFor="name"
+                      className="text-gray-700 font-semibold mb-2 block"
+                    >
                       Full Name
                     </Label>
                     <div className="relative">
@@ -222,7 +225,10 @@ export default function LoginPage() {
                   </div>
 
                   <div>
-                    <Label htmlFor="reg-email" className="text-gray-700 font-semibold mb-2 block">
+                    <Label
+                      htmlFor="reg-email"
+                      className="text-gray-700 font-semibold mb-2 block"
+                    >
                       Email Address
                     </Label>
                     <div className="relative">
@@ -245,7 +251,10 @@ export default function LoginPage() {
                   </div>
 
                   <div>
-                    <Label htmlFor="reg-password" className="text-gray-700 font-semibold mb-2 block">
+                    <Label
+                      htmlFor="reg-password"
+                      className="text-gray-700 font-semibold mb-2 block"
+                    >
                       Password
                     </Label>
                     <div className="relative">
@@ -279,7 +288,10 @@ export default function LoginPage() {
                   </div>
 
                   <div>
-                    <Label htmlFor="confirm-password" className="text-gray-700 font-semibold mb-2 block">
+                    <Label
+                      htmlFor="confirm-password"
+                      className="text-gray-700 font-semibold mb-2 block"
+                    >
                       Confirm Password
                     </Label>
                     <div className="relative">
@@ -337,7 +349,9 @@ export default function LoginPage() {
 
               {/* Toggle */}
               <p className="text-center text-gray-600 text-sm">
-                {isLogin ? "Don't have an account? " : "Already have an account? "}
+                {isLogin
+                  ? "Don't have an account? "
+                  : "Already have an account? "}
                 <button
                   type="button"
                   onClick={() => {
@@ -365,8 +379,8 @@ export default function LoginPage() {
               <div>
                 <h3 className="text-2xl font-bold mb-3">Why Book With Us?</h3>
                 <p className="text-gray-600">
-                  Experience premium 7v7 artificial turf fields with professional
-                  lighting and world-class facilities.
+                  Experience premium 7v7 artificial turf fields with
+                  professional lighting and world-class facilities.
                 </p>
               </div>
 
@@ -394,7 +408,9 @@ export default function LoginPage() {
                       <span className="text-gray-900 font-bold text-sm">✓</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900">{item.title}</h4>
+                      <h4 className="font-semibold text-gray-900">
+                        {item.title}
+                      </h4>
                       <p className="text-gray-500 text-sm">{item.desc}</p>
                     </div>
                   </div>

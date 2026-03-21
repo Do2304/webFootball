@@ -3,6 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { useAuth } from "@/context/AuthContext";
 
 const navLinks = [
@@ -18,6 +26,13 @@ export default function Header() {
   const { user, logout } = useAuth();
   const location = useLocation();
   const [open, setOpen] = useState(false);
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
+
+  const handleLogout = async () => {
+    await logout();
+    setShowLogoutDialog(false);
+    setOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
@@ -68,7 +83,7 @@ export default function Header() {
                 )}
                 <span className="text-sm font-medium">{user.name}</span>
               </div>
-              <Button variant="ghost" size="sm" onClick={logout}>
+              <Button variant="ghost" size="sm" onClick={() => setShowLogoutDialog(true)}>
                 <LogOut className="w-4 h-4" />
               </Button>
             </div>
@@ -128,10 +143,7 @@ export default function Header() {
                       My Bookings
                     </Link>
                     <button
-                      onClick={() => {
-                        logout();
-                        setOpen(false);
-                      }}
+                      onClick={() => setShowLogoutDialog(true)}
                       className="px-4 py-3 rounded-lg text-base font-medium text-red-600 hover:bg-red-50 text-left"
                     >
                       Log Out
@@ -154,6 +166,34 @@ export default function Header() {
           </Sheet>
         </div>
       </div>
+
+      {/* Logout Confirmation Dialog */}
+      <Dialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
+        <DialogContent className="sm:max-w-[400px]">
+          <DialogHeader>
+            <DialogTitle className="text-lg">Confirm Logout</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to log out? You'll need to sign in again to book fields or view your bookings.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-3 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setShowLogoutDialog(false)}
+              className="sm:order-1"
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleLogout}
+              className="sm:order-2"
+            >
+              Log Out
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 }
