@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  CalendarDays,
-  Phone,
-  Star,
-  MapPin,
-  ArrowRight,
-  Clock,
-} from "lucide-react";
+import { CalendarDays, Phone, Star, MapPin, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import api from "@/api/client";
@@ -32,13 +25,7 @@ export default function HomePage() {
     <div>
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full block"
-        >
+        <video autoPlay loop muted playsInline className="w-full block">
           <source src="/videos/v1.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/40" />
@@ -49,9 +36,7 @@ export default function HomePage() {
           <p className="text-sm sm:text-xl md:text-2xl mb-1 sm:mb-2 text-gray-200">
             Premium 7v7 Artificial Turf Fields
           </p>
-          <p className="text-xs sm:text-lg mb-4 sm:mb-8 text-gray-300">
-            Book your field in under 30 seconds
-          </p>
+
           <div className="flex flex-row gap-3 sm:gap-4">
             <Link to="/fields">
               <Button
@@ -59,7 +44,7 @@ export default function HomePage() {
                 className="bg-accent hover:bg-accent/90 text-white text-sm sm:text-lg sm:px-8 sm:py-6"
               >
                 <CalendarDays className="w-4 h-4 mr-1 sm:w-5 sm:h-5 sm:mr-2" />
-                Book Field
+                Book Now
               </Button>
             </Link>
             <a href="tel:5551234567">
@@ -74,16 +59,7 @@ export default function HomePage() {
             </a>
           </div>
         </div>
-        {/* Field Rental Arrow (like wireframe) */}
-        <Link
-          to="/fields"
-          className="absolute right-4 top-1/2 -translate-y-1/2 hidden lg:flex items-center gap-2 bg-orange-500 text-white px-4 py-3 rounded-lg font-bold shadow-lg hover:bg-orange-600 transition"
-        >
-          Field Rental
-          <ArrowRight className="w-5 h-5" />
-        </Link>
       </section>
-
 
       {/* Slides Section - Field Photos, Promotions */}
       <section className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
@@ -189,10 +165,7 @@ export default function HomePage() {
           <h2 className="text-3xl font-bold text-center mb-12">Gallery</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div
-                key={i}
-                className="aspect-video rounded-lg overflow-hidden"
-              >
+              <div key={i} className="aspect-video rounded-lg overflow-hidden">
                 <img
                   src={`/images/i${i}.jpg`}
                   alt={`Field Photo ${i}`}
