@@ -1,6 +1,12 @@
-import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "../generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import pg from "pg";
+import bcryptjs from "bcryptjs";
+import "dotenv/config";
 
-const prisma = new PrismaClient();
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   // Create fields
@@ -79,11 +85,15 @@ async function main() {
     });
   }
 
-  // Create sample reviews
-  const adminUser = await prisma.user.create({
-    data: {
-      email: "admin@football.com",
+  // Create admin user with password
+  const hashedPassword = await bcryptjs.hash("admin123456", 10);
+  const adminUser = await prisma.user.upsert({
+    where: { email: "admin@swsports.com" },
+    update: {},
+    create: {
+      email: "admin@swsports.com",
       name: "Admin",
+      password: hashedPassword,
       role: "ADMIN",
     },
   });

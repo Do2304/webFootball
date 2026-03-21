@@ -29,7 +29,7 @@ export default function LoginPage() {
   });
 
   if (user) {
-    navigate("/");
+    navigate(user.role === "ADMIN" ? "/admin" : "/");
     return null;
   }
 
@@ -58,8 +58,12 @@ export default function LoginPage() {
       });
 
       if (res.data.token) {
-        await loginWithToken(res.data.token);
-        navigate("/");
+        const loggedInUser = await loginWithToken(res.data.token);
+        if (loggedInUser.role === "ADMIN") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       }
     } catch (err) {
       const error = err as { response?: { data?: { message?: string } } };

@@ -13,6 +13,7 @@ import contactRoutes from "./routes/contact";
 import galleryRoutes from "./routes/gallery";
 import eventRoutes from "./routes/events";
 import pricingRoutes from "./routes/pricing";
+import adminRoutes from "./routes/admin";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -38,6 +39,7 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/gallery", galleryRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/pricing", pricingRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Health check
 app.get("/api/health", (_req, res) => {
