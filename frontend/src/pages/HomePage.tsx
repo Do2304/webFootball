@@ -50,8 +50,7 @@ export default function HomePage() {
             <a href="tel:5551234567">
               <Button
                 size="sm"
-                variant="outline"
-                className="border-0 bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900 hover:from-teal-500 hover:to-yellow-400 text-sm sm:text-lg sm:px-8 sm:py-6"
+                className="bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900 hover:opacity-90 text-sm sm:text-lg sm:px-8 sm:py-6"
               >
                 <Phone className="w-4 h-4 mr-1 sm:w-5 sm:h-5 sm:mr-2" />
                 Call Now
