@@ -61,7 +61,83 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Slides Section - Field Photos, Promotions */}
+      {/* Promotions Section */}
+      <section className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12">Promotions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            <Card className="overflow-hidden border-0 shadow-lg bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900">
+              <CardContent className="p-6 sm:p-8">
+                <span className="inline-block bg-black/10 text-sm font-semibold px-3 py-1 rounded-full mb-4">
+                  Limited Time
+                </span>
+                <h3 className="text-2xl font-bold mb-2">First Booking 20% Off</h3>
+                <p className="text-gray-800/80 mb-4">
+                  New customers get 20% off their first field booking. Use code FIRST20 at checkout.
+                </p>
+                <Link to="/fields">
+                  <Button className="bg-gray-900 text-white hover:bg-gray-800 font-semibold">
+                    Book Now
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden border-0 shadow-lg bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900">
+              <CardContent className="p-6 sm:p-8">
+                <span className="inline-block bg-black/10 text-sm font-semibold px-3 py-1 rounded-full mb-4">
+                  Weekly Deal
+                </span>
+                <h3 className="text-2xl font-bold mb-2">Weekday Morning Special</h3>
+                <p className="text-gray-800/80 mb-4">
+                  Book any field Mon-Fri before 10 AM and pay only $30/hour. Perfect for morning training sessions.
+                </p>
+                <Link to="/fields">
+                  <Button className="bg-gray-900 text-white hover:bg-gray-800 font-semibold">
+                    Book Now
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden border-0 shadow-lg bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900">
+              <CardContent className="p-6 sm:p-8">
+                <span className="inline-block bg-black/10 text-sm font-semibold px-3 py-1 rounded-full mb-4">
+                  Group Offer
+                </span>
+                <h3 className="text-2xl font-bold mb-2">Team Package</h3>
+                <p className="text-gray-800/80 mb-4">
+                  Book 10 sessions and get 2 free. Ideal for teams with regular training schedules.
+                </p>
+                <Link to="/fields">
+                  <Button className="bg-gray-900 text-white hover:bg-gray-800 font-semibold">
+                    Learn More
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden border-0 shadow-lg bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900">
+              <CardContent className="p-6 sm:p-8">
+                <span className="inline-block bg-black/10 text-sm font-semibold px-3 py-1 rounded-full mb-4">
+                  Membership
+                </span>
+                <h3 className="text-2xl font-bold mb-2">Monthly Pass</h3>
+                <p className="text-gray-800/80 mb-4">
+                  Unlimited access for $299/month. Play anytime, any field. Cancel anytime.
+                </p>
+                <Link to="/fields">
+                  <Button className="bg-gray-900 text-white hover:bg-gray-800 font-semibold">
+                    Sign Up
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Slides Section - Field Photos */}
       <section className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">
