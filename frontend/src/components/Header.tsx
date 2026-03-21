@@ -74,14 +74,14 @@ export default function Header() {
             </div>
           ) : (
             <Link to="/login" className="hidden lg:block">
-              <Button className="bg-primary hover:bg-primary/90">
+              <Button className="bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900 hover:from-teal-500 hover:to-yellow-400">
                 Log in / Register
               </Button>
             </Link>
           )}
 
           <Link to="/fields" className="hidden lg:block">
-            <Button className="bg-red-600 hover:bg-red-700 text-white">
+            <Button className="bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900 hover:from-teal-500 hover:to-yellow-400">
               Book Now
             </Button>
           </Link>
@@ -139,13 +139,13 @@ export default function Header() {
                   </>
                 ) : (
                   <Link to="/login" onClick={() => setOpen(false)}>
-                    <Button className="w-full bg-primary">
+                    <Button className="w-full bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900 hover:from-teal-500 hover:to-yellow-400">
                       Log in / Register
                     </Button>
                   </Link>
                 )}
                 <Link to="/fields" onClick={() => setOpen(false)}>
-                  <Button className="w-full bg-accent text-white mt-2">
+                  <Button className="w-full bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900 hover:from-teal-500 hover:to-yellow-400 mt-2">
                     Book Now
                   </Button>
                 </Link>

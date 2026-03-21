@@ -41,7 +41,7 @@ export default function HomePage() {
             <Link to="/fields">
               <Button
                 size="sm"
-                className="bg-accent hover:bg-accent/90 text-white text-sm sm:text-lg sm:px-8 sm:py-6"
+                className="bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900 hover:from-teal-500 hover:to-yellow-400 text-sm sm:text-lg sm:px-8 sm:py-6"
               >
                 <CalendarDays className="w-4 h-4 mr-1 sm:w-5 sm:h-5 sm:mr-2" />
                 Book Now
@@ -51,7 +51,7 @@ export default function HomePage() {
               <Button
                 size="sm"
                 variant="outline"
-                className="border-white bg-accent text-white hover:bg-white/10 text-sm sm:text-lg sm:px-8 sm:py-6"
+                className="border-0 bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900 hover:from-teal-500 hover:to-yellow-400 text-sm sm:text-lg sm:px-8 sm:py-6"
               >
                 <Phone className="w-4 h-4 mr-1 sm:w-5 sm:h-5 sm:mr-2" />
                 Call Now
