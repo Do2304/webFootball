@@ -110,13 +110,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 bg-gradient-to-br from-teal-50 via-white to-yellow-50">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-4 pb-12 bg-gradient-to-br from-teal-50 via-white to-yellow-50">
       <div className="w-full max-w-4xl">
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left side - Form */}
           <Card className="border-0 shadow-xl">
-            <CardContent className="p-8 sm:p-10">
+            <CardContent className="p-5 sm:p-6">
               {isLogin ? (
                 // Login Form
                 <form onSubmit={handleEmailLogin} className="space-y-5">
