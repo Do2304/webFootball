@@ -2,8 +2,23 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  CalendarDays,
+  Clock,
+  Users,
+  MapPin,
+  CheckCircle,
+  ArrowRight,
+} from "lucide-react";
 import api from "@/api/client";
 import type { Field } from "@/types";
+
+const fallbackFields: Field[] = [
+  { id: "1", name: "Field #1", description: "Premium artificial turf with LED lighting", type: "7v7", imageUrl: "/images/i1.jpg", isActive: true, pricingRules: [] },
+  { id: "2", name: "Field #2", description: "Standard artificial turf field", type: "7v7", imageUrl: "/images/i2.jpg", isActive: true, pricingRules: [] },
+  { id: "3", name: "Field #3", description: "Indoor turf with climate control", type: "7v7", imageUrl: "/images/i3.jpg", isActive: true, pricingRules: [] },
+  { id: "4", name: "Field #4", description: "Outdoor field with panoramic view", type: "7v7", imageUrl: "/images/i4.jpg", isActive: true, pricingRules: [] },
+];
 
 export default function FieldsPage() {
   const [fields, setFields] = useState<Field[]>([]);
@@ -12,15 +27,16 @@ export default function FieldsPage() {
   useEffect(() => {
     api
       .get("/fields")
-      .then((res) => setFields(res.data))
+      .then((res) => {
+        const data = res.data;
+        if (data && data.length > 0) {
+          setFields(data);
+        } else {
+          setFields(fallbackFields);
+        }
+      })
       .catch(() => {
-        // Use fallback data if API is not available
-        setFields([
-          { id: "1", name: "Field #1", description: "Premium artificial turf with LED lighting", type: "7v7", imageUrl: null, isActive: true, pricingRules: [] },
-          { id: "2", name: "Field #2", description: "Standard artificial turf field", type: "7v7", imageUrl: null, isActive: true, pricingRules: [] },
-          { id: "3", name: "Field #3", description: "Indoor turf with climate control", type: "7v7", imageUrl: null, isActive: true, pricingRules: [] },
-          { id: "4", name: "Field #4", description: "Outdoor field with panoramic view", type: "7v7", imageUrl: null, isActive: true, pricingRules: [] },
-        ]);
+        setFields(fallbackFields);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -34,64 +50,121 @@ export default function FieldsPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-      <h1 className="text-3xl lg:text-4xl font-bold text-center mb-3">Field Rental</h1>
-      <p className="text-gray-500 text-center mb-10 lg:mb-12">
-        Choose a field and book your time slot
-      </p>
+    <div>
+      {/* Hero Banner */}
+      <section className="relative h-[250px] sm:h-[300px] overflow-hidden">
+        <img
+          src="/images/i5.jpg"
+          alt="Field Rental"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
+            Field Rental
+          </h1>
+          <p className="text-base sm:text-lg text-gray-200 max-w-2xl">
+            Book premium 7v7 artificial turf fields with professional lighting
+          </p>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="bg-white border-b">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-3 gap-4 sm:gap-8 text-center">
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-teal-400 to-yellow-300 flex items-center justify-center">
+                <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-gray-900" />
+              </div>
+              <p className="text-xs sm:text-sm font-semibold text-gray-700">1. Pick a Field</p>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-teal-400 to-yellow-300 flex items-center justify-center">
+                <CalendarDays className="w-5 h-5 sm:w-6 sm:h-6 text-gray-900" />
+              </div>
+              <p className="text-xs sm:text-sm font-semibold text-gray-700">2. Choose Date & Time</p>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-teal-400 to-yellow-300 flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-gray-900" />
+              </div>
+              <p className="text-xs sm:text-sm font-semibold text-gray-700">3. Confirm & Play</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Fields Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-12 lg:mb-16">
-        {fields.map((field) => (
-          <Link key={field.id} to={`/fields/${field.id}/book`}>
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer overflow-hidden group">
-              <div className="h-48 bg-cyan-400 flex items-center justify-center relative">
-                {field.imageUrl ? (
-                  <img
-                    src={field.imageUrl}
-                    alt={field.name}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <span className="text-white text-2xl font-bold">{field.name}</span>
-                )}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition" />
-              </div>
-              <CardContent className="p-5 sm:p-6">
-                <h3 className="font-bold text-lg">{field.name}</h3>
-                <p className="text-gray-500 text-sm mt-2">{field.description}</p>
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="text-sm font-medium text-primary">{field.type}</span>
-                  <Button size="sm" className="bg-primary hover:bg-primary/90">
-                    Book Now
-                  </Button>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <h2 className="text-2xl font-bold mb-8">Choose Your Field</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {fields.map((field) => (
+            <Link key={field.id} to={`/fields/${field.id}/book`}>
+              <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden group h-full">
+                <div className="h-44 relative overflow-hidden">
+                  {field.imageUrl ? (
+                    <img
+                      src={field.imageUrl}
+                      alt={field.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-teal-400 to-yellow-300 flex items-center justify-center">
+                      <span className="text-gray-900 text-2xl font-bold">{field.name}</span>
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-3 left-4">
+                    <span className="text-white font-bold text-lg">{field.name}</span>
+                  </div>
+                  <div className="absolute top-3 right-3">
+                    <span className="bg-white/90 text-gray-900 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
+                      <Users className="w-3 h-3" />
+                      {field.type}
+                    </span>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-      </div>
+                <CardContent className="p-4">
+                  <p className="text-gray-500 text-sm mb-3">{field.description}</p>
+                  <Button size="sm" className="w-full bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900 hover:opacity-90 font-semibold">
+                    Book Now
+                    <ArrowRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
 
-      {/* Booking Info */}
-      <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-0">
-        <CardContent className="p-8 sm:p-10 lg:p-12 text-center">
-          <h2 className="text-xl font-bold mb-2">7 vs 7 Field Rental</h2>
-          <p className="text-gray-600 mb-4">
-            Pick a field, choose your date, and check availability
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 text-sm">
-            <span className="bg-white px-4 py-2 rounded-full shadow-sm">
-              Field: Pick a Field
-            </span>
-            <span className="bg-white px-4 py-2 rounded-full shadow-sm">
-              Pick a Date
-            </span>
-            <span className="bg-white px-4 py-2 rounded-full shadow-sm">
-              Check Availability
-            </span>
+      {/* Pricing Info */}
+      <section className="bg-gray-50 border-t">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+          <h2 className="text-2xl font-bold text-center mb-8">Pricing</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {[
+              { label: "Weekday Morning", time: "6AM - 4PM", price: "$40/hr" },
+              { label: "Weekday Peak", time: "4PM - 11PM", price: "$70/hr" },
+              { label: "Weekend Morning", time: "6AM - 4PM", price: "$60/hr" },
+              { label: "Weekend Peak", time: "4PM - 11PM", price: "$80/hr" },
+            ].map((item) => (
+              <Card key={item.label} className="text-center border-0 shadow-md">
+                <CardContent className="p-5 sm:p-6">
+                  <h3 className="font-bold text-sm sm:text-base mb-2">{item.label}</h3>
+                  <div className="flex items-center justify-center gap-1 text-gray-500 mb-3">
+                    <Clock className="w-3 h-3" />
+                    <span className="text-xs">{item.time}</span>
+                  </div>
+                  <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-teal-500 to-yellow-400 bg-clip-text text-transparent">
+                    {item.price}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </section>
     </div>
   );
 }
