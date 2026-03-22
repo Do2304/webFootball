@@ -6,6 +6,13 @@ import {
   LogOut,
   Menu,
   X,
+  MapPin,
+  Tag,
+  UserCog,
+  FileText,
+  Bell,
+  BarChart3,
+  Briefcase,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
@@ -13,8 +20,15 @@ import { useState, useEffect } from "react";
 
 const sidebarLinks = [
   { label: "Dashboard", path: "/admin", icon: LayoutDashboard },
+  { label: "Fields", path: "/admin/fields", icon: MapPin },
   { label: "Bookings", path: "/admin/bookings", icon: CalendarDays },
-  { label: "Users", path: "/admin/users", icon: Users },
+  { label: "Customers", path: "/admin/users", icon: Users },
+  { label: "Reports", path: "/admin/reports", icon: BarChart3 },
+  { label: "Staff", path: "/admin/staff", icon: UserCog },
+  { label: "Promotions", path: "/admin/promotions", icon: Tag },
+  { label: "Waivers", path: "/admin/waivers", icon: FileText },
+  { label: "Notifications", path: "/admin/notifications", icon: Bell },
+  { label: "Services", path: "/admin/services", icon: Briefcase },
 ];
 
 export default function AdminLayout() {

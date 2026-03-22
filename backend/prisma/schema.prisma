@@ -140,3 +140,71 @@ model Event {
 
   @@map("events")
 }
+
+model Promotion {
+  id              String    @id @default(cuid())
+  title           String
+  description     String?
+  code            String?   @unique
+  discountPercent Float?
+  discountAmount  Float?
+  startDate       DateTime
+  endDate         DateTime
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("promotions")
+}
+
+model Staff {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  phone         String?
+  role          String    @default("Staff")
+  salary        Float     @default(0)
+  startDate     DateTime  @default(now())
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("staff")
+}
+
+model Waiver {
+  id            String    @id @default(cuid())
+  title         String
+  content       String
+  isRequired    Boolean   @default(true)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("waivers")
+}
+
+model Notification {
+  id              String    @id @default(cuid())
+  title           String
+  message         String
+  type            String    @default("general")
+  targetAudience  String    @default("all")
+  isSent          Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+
+  @@map("notifications")
+}
+
+model Service {
+  id            String    @id @default(cuid())
+  name          String
+  description   String?
+  price         Float     @default(0)
+  category      String    @default("general")
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("services")
+}

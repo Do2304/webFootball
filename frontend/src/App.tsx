@@ -17,6 +17,13 @@ import ProfilePage from "@/pages/ProfilePage";
 import DashboardPage from "@/pages/admin/DashboardPage";
 import AdminBookingsPage from "@/pages/admin/AdminBookingsPage";
 import AdminUsersPage from "@/pages/admin/AdminUsersPage";
+import AdminFieldsPage from "@/pages/admin/AdminFieldsPage";
+import AdminReportsPage from "@/pages/admin/AdminReportsPage";
+import AdminStaffPage from "@/pages/admin/AdminStaffPage";
+import AdminPromotionsPage from "@/pages/admin/AdminPromotionsPage";
+import AdminWaiversPage from "@/pages/admin/AdminWaiversPage";
+import AdminNotificationsPage from "@/pages/admin/AdminNotificationsPage";
+import AdminServicesPage from "@/pages/admin/AdminServicesPage";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
 
@@ -44,8 +51,15 @@ function App() {
             {/* Admin routes */}
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<DashboardPage />} />
+              <Route path="/admin/fields" element={<AdminFieldsPage />} />
               <Route path="/admin/bookings" element={<AdminBookingsPage />} />
               <Route path="/admin/users" element={<AdminUsersPage />} />
+              <Route path="/admin/reports" element={<AdminReportsPage />} />
+              <Route path="/admin/staff" element={<AdminStaffPage />} />
+              <Route path="/admin/promotions" element={<AdminPromotionsPage />} />
+              <Route path="/admin/waivers" element={<AdminWaiversPage />} />
+              <Route path="/admin/notifications" element={<AdminNotificationsPage />} />
+              <Route path="/admin/services" element={<AdminServicesPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
