@@ -71,18 +71,26 @@ export default function Header() {
                   My Bookings
                 </Button>
               </Link>
-              <div className="flex items-center gap-2">
-                {user.avatar ? (
-                  <img
-                    src={user.avatar}
-                    alt={user.name || ""}
-                    className="w-8 h-8 rounded-full"
-                  />
-                ) : (
-                  <User className="w-5 h-5" />
-                )}
-                <span className="text-sm font-medium">{user.name}</span>
-              </div>
+              {user.role === "ADMIN" ? (
+                <Link to="/admin">
+                  <Button variant="outline" size="sm">
+                    Admin
+                  </Button>
+                </Link>
+              ) : (
+                <Link to="/profile" className="flex items-center gap-2 hover:opacity-80 transition">
+                  {user.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt={user.name || ""}
+                      className="w-8 h-8 rounded-full"
+                    />
+                  ) : (
+                    <User className="w-5 h-5" />
+                  )}
+                  <span className="text-sm font-medium">{user.name}</span>
+                </Link>
+              )}
               <Button variant="ghost" size="sm" onClick={() => setShowLogoutDialog(true)}>
                 <LogOut className="w-4 h-4" />
               </Button>
@@ -125,16 +133,18 @@ export default function Header() {
                 <div className="border-t my-2" />
                 {user ? (
                   <>
-                    <div className="px-4 py-2 flex items-center gap-2">
-                      {user.avatar && (
-                        <img
-                          src={user.avatar}
-                          alt=""
-                          className="w-8 h-8 rounded-full"
-                        />
+                    <Link
+                      to={user.role === "ADMIN" ? "/admin" : "/profile"}
+                      onClick={() => setOpen(false)}
+                      className="px-4 py-2 flex items-center gap-2 rounded-lg hover:bg-gray-100"
+                    >
+                      {user.avatar ? (
+                        <img src={user.avatar} alt="" className="w-8 h-8 rounded-full" />
+                      ) : (
+                        <User className="w-5 h-5" />
                       )}
                       <span className="font-medium">{user.name}</span>
-                    </div>
+                    </Link>
                     <Link
                       to="/my-bookings"
                       onClick={() => setOpen(false)}
@@ -142,6 +152,15 @@ export default function Header() {
                     >
                       My Bookings
                     </Link>
+                    {user.role === "ADMIN" && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setOpen(false)}
+                        className="px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:bg-gray-100"
+                      >
+                        Admin Dashboard
+                      </Link>
+                    )}
                     <button
                       onClick={() => setShowLogoutDialog(true)}
                       className="px-4 py-3 rounded-lg text-base font-medium text-red-600 hover:bg-red-50 text-left"

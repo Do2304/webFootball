@@ -13,6 +13,7 @@ import AboutPage from "@/pages/AboutPage";
 import LeaguesPage from "@/pages/LeaguesPage";
 import PickupPage from "@/pages/PickupPage";
 import AcademyPage from "@/pages/AcademyPage";
+import ProfilePage from "@/pages/ProfilePage";
 import DashboardPage from "@/pages/admin/DashboardPage";
 import AdminBookingsPage from "@/pages/admin/AdminBookingsPage";
 import AdminUsersPage from "@/pages/admin/AdminUsersPage";
@@ -37,6 +38,7 @@ function App() {
               <Route path="/leagues" element={<LeaguesPage />} />
               <Route path="/pickup" element={<PickupPage />} />
               <Route path="/academy" element={<AcademyPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
             </Route>
 
             {/* Admin routes */}
