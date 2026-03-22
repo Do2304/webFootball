@@ -97,26 +97,11 @@ export default function Footer() {
               <li>Sat-Sun: 7:00 AM - 11:00 PM</li>
             </ul>
             <div className="mt-4 flex gap-3">
-              <a
-                href="#"
-                className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-gray-600 transition"
-                aria-label="Facebook"
-              >
-                f
+              <a href="#" aria-label="Facebook" className="hover:opacity-80 transition">
+                <img src="/images/icon_fb.svg" alt="Facebook" className="w-8 h-8" />
               </a>
-              <a
-                href="#"
-                className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-gray-600 transition"
-                aria-label="Instagram"
-              >
-                i
-              </a>
-              <a
-                href="#"
-                className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-gray-600 transition"
-                aria-label="WhatsApp"
-              >
-                w
+              <a href="#" aria-label="Instagram" className="hover:opacity-80 transition">
+                <img src="/images/icon_ig.svg" alt="Instagram" className="w-8 h-8" />
               </a>
             </div>
           </div>
