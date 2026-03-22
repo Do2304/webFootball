@@ -29,15 +29,22 @@ import api from "@/api/client";
 import { useAuth } from "@/context/AuthContext";
 import type { Field, TimeSlot } from "@/types";
 
+interface AnySlot extends TimeSlot {
+  assignedFieldId?: string;
+  assignedFieldName?: string;
+}
+
 export default function BookingPage() {
   const { fieldId } = useParams<{ fieldId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const isAnyField = fieldId === "any";
 
   const [field, setField] = useState<Field | null>(null);
+  const [allFields, setAllFields] = useState<Field[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [slots, setSlots] = useState<TimeSlot[]>([]);
-  const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
+  const [slots, setSlots] = useState<AnySlot[]>([]);
+  const [selectedSlot, setSelectedSlot] = useState<AnySlot | null>(null);
   const [showBookingDialog, setShowBookingDialog] = useState(false);
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState(false);
@@ -50,7 +57,28 @@ export default function BookingPage() {
   });
 
   useEffect(() => {
-    if (fieldId) {
+    if (isAnyField) {
+      setField({
+        id: "any",
+        name: "Any Available Field",
+        description: "We'll assign you any open field",
+        type: "7v7",
+        imageUrl: null,
+        isActive: true,
+        pricingRules: [],
+      });
+      // Fetch all real fields from DB
+      api
+        .get("/fields")
+        .then((res) => {
+          const data = res.data as Field[];
+          if (data && data.length > 0) {
+            setAllFields(data);
+          }
+        })
+        .catch(() => {})
+        .finally(() => setLoading(false));
+    } else if (fieldId) {
       api
         .get(`/fields/${fieldId}`)
         .then((res) => setField(res.data))
@@ -67,10 +95,57 @@ export default function BookingPage() {
         })
         .finally(() => setLoading(false));
     }
-  }, [fieldId]);
+  }, [fieldId, isAnyField]);
 
   useEffect(() => {
-    if (fieldId && selectedDate) {
+    if (!selectedDate) return;
+
+    if (isAnyField && allFields.length > 0) {
+      // Check availability across all fields and merge
+      const dateStr = format(selectedDate, "yyyy-MM-dd");
+      const fetchAll = allFields.map((f) =>
+        api
+          .get(`/fields/${f.id}/availability?date=${dateStr}`)
+          .then((res) => ({ fieldId: f.id, fieldName: f.name, slots: res.data.slots as TimeSlot[] }))
+          .catch(() => {
+            const mockSlots: TimeSlot[] = [];
+            for (let h = 6; h <= 22; h++) {
+              mockSlots.push({
+                time: `${h.toString().padStart(2, "0")}:00`,
+                available: Math.random() > 0.3,
+                price: h >= 16 ? 70 : 40,
+              });
+            }
+            return { fieldId: f.id, fieldName: f.name, slots: mockSlots };
+          })
+      );
+
+      Promise.all(fetchAll).then((results) => {
+        // For each time slot, mark available if ANY field has it open
+        const timeMap: Record<string, AnySlot> = {};
+        for (let h = 6; h <= 22; h++) {
+          const time = `${h.toString().padStart(2, "0")}:00`;
+          timeMap[time] = {
+            time,
+            available: false,
+            price: h >= 16 ? 70 : 40,
+          };
+        }
+
+        for (const result of results) {
+          for (const slot of result.slots) {
+            if (slot.available && timeMap[slot.time] && !timeMap[slot.time].available) {
+              timeMap[slot.time].available = true;
+              timeMap[slot.time].assignedFieldId = result.fieldId;
+              timeMap[slot.time].assignedFieldName = result.fieldName;
+              timeMap[slot.time].price = slot.price;
+            }
+          }
+        }
+
+        setSlots(Object.values(timeMap));
+      });
+    } else if (fieldId && !isAnyField) {
       const dateStr = format(selectedDate, "yyyy-MM-dd");
       api
         .get(`/fields/${fieldId}/availability?date=${dateStr}`)
@@ -87,7 +162,7 @@ export default function BookingPage() {
           setSlots(mockSlots);
         });
     }
-  }, [fieldId, selectedDate]);
+  }, [fieldId, selectedDate, isAnyField, allFields]);
 
   const handleSlotClick = (slot: TimeSlot) => {
     if (!slot.available) return;
@@ -104,20 +179,22 @@ export default function BookingPage() {
     setBooking(true);
     try {
       const startHour = parseInt(selectedSlot.time.split(":")[0]);
+      const bookingFieldId = isAnyField ? selectedSlot.assignedFieldId : fieldId;
+      const bookingFieldName = isAnyField ? selectedSlot.assignedFieldName : field?.name;
       await api.post("/bookings", {
-        fieldId,
+        fieldId: bookingFieldId,
         date: format(selectedDate, "yyyy-MM-dd"),
         startTime: selectedSlot.time,
         endTime: `${(startHour + 1).toString().padStart(2, "0")}:00`,
         playerName: formData.playerName || user.name,
         playerPhone: formData.playerPhone || user.phone,
         playerEmail: formData.playerEmail || user.email,
-        notes: formData.notes,
+        notes: isAnyField ? `[Auto-assigned: ${bookingFieldName}] ${formData.notes}` : formData.notes,
       });
       setShowBookingDialog(false);
       navigate("/checkout", {
         state: {
-          field: field?.name,
+          field: bookingFieldName,
           date: format(selectedDate, "PPP"),
           time: selectedSlot.time,
           price: selectedSlot.price,
@@ -132,7 +209,9 @@ export default function BookingPage() {
 
   const availableCount = slots.filter((s) => s.available).length;
   const fieldImages = ["/images/i1.jpg", "/images/i2.jpg", "/images/i3.jpg", "/images/i4.jpg"];
-  const fieldImage = field?.imageUrl || fieldImages[(parseInt(fieldId || "1") - 1) % 4];
+  const fieldImage = isAnyField
+    ? "/images/i5.jpg"
+    : field?.imageUrl || fieldImages[(parseInt(fieldId || "1") - 1) % 4];
 
   if (loading) {
     return (
@@ -297,6 +376,9 @@ export default function BookingPage() {
                             {slot.available ? "Open" : "Taken"}
                           </span>
                         </div>
+                        {isAnyField && slot.available && slot.assignedFieldName && (
+                          <p className="text-[10px] text-gray-400 mt-0.5">{slot.assignedFieldName}</p>
+                        )}
                         <p className={`text-sm font-semibold mt-1 ${
                           isSelected ? "text-teal-700" : "text-gray-600"
                         }`}>
@@ -340,7 +422,9 @@ export default function BookingPage() {
                 <div className="flex flex-wrap items-center gap-4 sm:gap-8 text-center sm:text-left">
                   <div>
                     <p className="text-xs text-gray-400 uppercase tracking-wide">Field</p>
-                    <p className="font-semibold">{field?.name}</p>
+                    <p className="font-semibold">
+                      {isAnyField ? selectedSlot.assignedFieldName : field?.name}
+                    </p>
                   </div>
                   <div>
                     <p className="text-xs text-gray-400 uppercase tracking-wide">Date</p>
@@ -387,7 +471,9 @@ export default function BookingPage() {
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div>
                   <p className="text-gray-500">Field</p>
-                  <p className="font-medium">{field?.name}</p>
+                  <p className="font-medium">
+                    {isAnyField ? selectedSlot?.assignedFieldName : field?.name}
+                  </p>
                 </div>
                 <div>
                   <p className="text-gray-500">Type</p>

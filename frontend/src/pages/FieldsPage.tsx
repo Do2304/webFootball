@@ -9,6 +9,7 @@ import {
   MapPin,
   CheckCircle,
   ArrowRight,
+  Shuffle,
 } from "lucide-react";
 import api from "@/api/client";
 import type { Field } from "@/types";
@@ -99,6 +100,25 @@ export default function FieldsPage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <h2 className="text-2xl font-bold mb-8">Choose Your Field</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Any Available Field Option */}
+          <Link to="/fields/any/book" className="sm:col-span-2 lg:col-span-4">
+            <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden group border-2 border-dashed border-teal-300 bg-gradient-to-r from-teal-50 to-yellow-50">
+              <CardContent className="p-5 sm:p-6 flex flex-col sm:flex-row items-center gap-4">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-r from-teal-400 to-yellow-300 flex items-center justify-center shrink-0">
+                  <Shuffle className="w-7 h-7 text-gray-900" />
+                </div>
+                <div className="text-center sm:text-left flex-1">
+                  <h3 className="font-bold text-lg text-gray-900">Any Available Field</h3>
+                  <p className="text-gray-500 text-sm">Don't have a preference? We'll assign you any field that's open at your chosen time</p>
+                </div>
+                <Button size="sm" className="bg-gradient-to-r from-teal-400 to-yellow-300 text-gray-900 hover:opacity-90 font-semibold shrink-0">
+                  Quick Book
+                  <ArrowRight className="w-4 h-4 ml-1" />
+                </Button>
+              </CardContent>
+            </Card>
+          </Link>
+
           {fields.map((field) => (
             <Link key={field.id} to={`/fields/${field.id}/book`}>
               <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden group h-full">
